@@ -1,4 +1,4 @@
-import { getCocktailFromSearch } from "./util-dan.js";
+import { getCocktailFromSearch, getKeyWithHighestValue } from "./util-dan.js";
 import {card, generateCard } from "./cocktail-card.js";
 
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1"
@@ -24,6 +24,14 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
 //set click listener on recommend drink button
 document.getElementById("reco-button").addEventListener("click", () => {
     console.log("Recommend button pressed"); //call recommend function once integerated.
+    const favCat = getKeyWithHighestValue(likedCategoriesFrequencies);
+    if (favCat) {
+        fetch(`${COCKTAIL_BASE_API}/filter.php?c=${favCat}`)
+            .then(response => response.json())
+            .then(getCocktailFromSearch)
+            .then(cocktail => getCocktailById(cocktail.idDrink))
+            .catch(error => console.error(error));
+    }    
 });
 
 //=======================================
