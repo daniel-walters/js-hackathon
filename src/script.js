@@ -56,3 +56,55 @@ function retrieveList() {
     const listString = localStorage.getItem("drinks-list");
     return JSON.parse(listString || "[]");
 }
+
+// ======================
+// LIST OF LIKED DRINKS
+// ======================
+
+const generateLikedDrinkList = () => {
+    let myList = retrieveList();
+    console.log(myList);
+    if(myList.length == 0 || !myList) {
+        return console.log("currently no item in list");
+    }
+    // create divs with cocktail name and button to remove from list
+    let likedDrinksDiv = document.getElementById("liked-drinks")
+    // empty list on display first
+    likedDrinksDiv.innerHTML = "";
+    myList.forEach((drink) => {
+        // add html to display drink
+        likedDrinksDiv.innerHTML += displayLikedDrink(drink);
+        // and add event listener to remove button
+        console.log(drink);
+        addEventToDrinkList(drink, myList);
+    })
+
+}
+
+const displayLikedDrink = (drink) => {
+    // take drink object and turn it into a HTML
+    const drinkHtml = `<div>
+        <h3>${drink.name}</h3>
+        <button id="show-drink${drink.id}">Show more</button>
+        <button id="remove-${drink.id}">Remove from List</button>
+        </div>`
+    return drinkHtml;
+}
+
+// click to show list of liked drinks on display
+document.getElementById("show-liked-drinks").addEventListener("click", generateLikedDrinkList)
+
+
+
+// ================================
+// REMOVE DRINK FROM LOCSALSTORAGE
+// ================================
+
+const addEventToDrinkList = (drink, currentList) => {
+    document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
+        console.log(drink)
+        let newList = currentList.filter((item) => item.id !== drink.id);
+        localStorage.setItem("drinks-list", JSON.stringify(newList));
+        generateLikedDrinkList;
+    })
+}
