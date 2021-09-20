@@ -29,7 +29,7 @@ document.getElementById("reco-button").addEventListener("click", () => {
         fetch(`${COCKTAIL_BASE_API}/filter.php?c=${favCat}`)
             .then(response => response.json())
             .then(getCocktailFromSearch)
-            .then(cocktail => getCocktailById(cocktail.idDrink))
+            .then(cocktail => getCocktailById(cocktail.idDrink, true))
             .catch(error => console.error(error));
     }    
 });
@@ -39,11 +39,11 @@ document.getElementById("reco-button").addEventListener("click", () => {
 //=======================================
 
 
-// retrieves cocktail information based on its id
-function getCocktailById(id) {
+// retrieves cocktail information based on its id. recommended = optional boolean if coming from recommended
+function getCocktailById(id, recommended) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
-    .then(data => generateCard(data.drinks[0]))
+    .then(data => generateCard(data.drinks[0], recommended))
     .catch(error => alert(error.message))
 }
 
