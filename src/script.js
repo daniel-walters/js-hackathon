@@ -32,7 +32,7 @@ const card = document.getElementById("cocktail-card");
 
 
 // retrieves cocktail information based on its id
-function getCocktail(id) {
+function getCocktailById(id) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(data => generateCard(data.drinks[0]))
@@ -40,10 +40,8 @@ function getCocktail(id) {
 }
 // adds child divs to cocktail-card
 function generateCard(data) {
-    console.log(data);
     // want to retrieve name, img-url, ingredients, instructions about cocktail
     const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl} = data;
-    console.log(name);
     // get list of ingredients and save as array. filters any null values
     const {strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15} = data;
     const ingredientsUnfiltered = [strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15]
@@ -52,8 +50,6 @@ function generateCard(data) {
     const {strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15} = data;
     const measuresUnfiltered = [strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15];
     const measures = measuresUnfiltered.filter((amount) => amount !== null);
-    console.log(ingredients)
-    console.log(measures)
 
     card.innerHTML = `
     <div class="child">
