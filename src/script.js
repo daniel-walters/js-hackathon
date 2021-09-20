@@ -55,6 +55,7 @@ function getCocktailById(id, recommended) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(data => generateCard(data.drinks[0], recommended))
+    .then(addEventsToCocktailCard)
     .catch(error => console.error(error.message))
 }
 
@@ -62,6 +63,7 @@ function getCocktailById(id, recommended) {
 //drink info = [{id, name}, category]
 function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("add-to-list").addEventListener("click", () => {
+        if (!likedDrinks.some(drink => drink.id === drinkInfo[0].id)) { //prevent duplicates
         likedDrinks.push(drinkInfo[0]);
         localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
         console.log(likedDrinks);
@@ -70,6 +72,10 @@ function addEventsToCocktailCard(drinkInfo) {
         likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
         localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
         console.log(likedCategoriesFrequencies);
+        }
+        else {
+            console.log("duplicate");
+        }
     })
 }
 
