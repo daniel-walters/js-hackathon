@@ -56,3 +56,34 @@ function retrieveList() {
     const listString = localStorage.getItem("drinks-list");
     return JSON.parse(listString || "[]");
 }
+
+// ======================
+// LIST OF LIKED DRINKS
+// ======================
+
+document.getElementById("show-liked-drinks").addEventListener("click", () => {
+    let myList = retrieveList();
+    console.log(myList);
+    if(myList.length == 0 || !myList) {
+        return console.log("currently no item in list");
+    }
+    // create divs with cocktail name and button to remove from list
+    // also button to show more, which changes div to card format
+    let likedDrinksDiv = document.getElementById("liked-drinks")
+    likedDrinksDiv.innerHTML = "";
+    myList.forEach((drink) => {
+        likedDrinksDiv.innerHTML += displayLikedDrink(drink);
+    })
+
+})
+
+const displayLikedDrink = (drink) => {
+    // take drink object and turn it into a HTML
+    const drinkHtml = `<div>
+        <h3>${drink.name}</h3>
+        <button id="show-drink${drink.id}">Show more</button>
+        <button id="remove-from-list">Remove from List</button>
+        </div>`
+    return drinkHtml;
+}
+
