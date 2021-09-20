@@ -12,7 +12,7 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
         fetch(`${COCKTAIL_BASE_API}/search.php?s=${searchBar.value.toLowerCase()}`)
             .then(response => response.json())
             .then(getCocktailFromSearch)
-            .then(cocktail => console.log(cocktail))
+            .then(generateCard)
             .catch(error => console.error(error))
             .finally(() => searchBar.value = "");
     }
@@ -35,21 +35,21 @@ const card = document.getElementById("cocktail-card");
 function getCocktail(id) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
-    .then(generateCard)
+    .then(data => generateCard(data.drinks[0]))
     .catch(error => alert(error.message))
 }
 // adds child divs to cocktail-card
 function generateCard(data) {
     console.log(data);
     // want to retrieve name, img-url, ingredients, instructions about cocktail
-    const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl} = data.drinks[0];
+    const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl} = data;
     console.log(name);
     // get list of ingredients and save as array. filters any null values
-    const {strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15} = data.drinks[0];
+    const {strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15} = data;
     const ingredientsUnfiltered = [strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15]
     const ingredients = ingredientsUnfiltered.filter((item) => item)
     // get list of measures and save as array. filters any null values
-    const {strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15} = data.drinks[0];
+    const {strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15} = data;
     const measuresUnfiltered = [strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15];
     const measures = measuresUnfiltered.filter((amount) => amount !== null);
     console.log(ingredients)
