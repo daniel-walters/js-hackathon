@@ -1,3 +1,4 @@
+
 //set click listener on search button and prevent page refresh
 document.getElementById("search-form").addEventListener("click", (event) => {
     event.preventDefault();

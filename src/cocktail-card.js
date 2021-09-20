@@ -38,6 +38,9 @@ function generateCard(data) {
         ${generateIngredientList(ingredients, measures)}
         </ul>
     </div>
+    <div class="child">
+        <button type="button" id="add-to-list"> Add this to my List</button>
+    </div>
     `
 }
 
