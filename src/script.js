@@ -10,3 +10,5 @@ document.getElementById("search-form").addEventListener("click", (event) => {
 document.getElementById("reco-button").addEventListener("click", () => {
     console.log("Recommend button pressed"); //call recommend function once integerated.
 });
+
+
