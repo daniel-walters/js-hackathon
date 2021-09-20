@@ -1,0 +1,55 @@
+* {
+    font-family: 'Bitter', serif;
+    margin: 0;
+}
+
+body {
+    color: #d3d3d3;
+    background: #565656;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0px;
+}
+
+#search-section {
+    background: hsla(0, 0%, 83%, 0.2);
+    text-align: center;
+    margin: none;
+    padding: 15px 0;
+}
+
+#search-bar, #submit-button, #reco-button, #show-liked-drinks {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+#submit-button {
+    background: white;
+    color: #565656;
+}
+
+#reco-button, #show-liked-drinks {
+    margin: 15px 10px 0 10px;;
+}
+
+#cocktail-card {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    padding: 2rem;
+    max-width: 80vw;
+    
+}
+
+.show-card {
+    background: white;
+    border: black 2px solid;
+}
+
+.child {
+    padding: 10px;
+    max-width: 45%;
+}

@@ -13,7 +13,7 @@ export const generateCard = (data, recommended) => {
     const {strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15} = data;
     const measuresUnfiltered = [strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5, strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10, strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15];
     const measures = measuresUnfiltered.filter((amount) => amount !== null);
-
+    card.classList.add("show-card");
     card.innerHTML = `
     <div class="child">
         <h2>${name}</h2>
@@ -30,10 +30,9 @@ export const generateCard = (data, recommended) => {
         <ul>
         ${generateRecipe(instructions)}
         </ul>
-
-    </div>
-    <div class="child">
+        <div class="grandchild">
         <button type="button" id="add-to-list"> Add this to my List</button>
+    </div>
     </div>
     `
     
