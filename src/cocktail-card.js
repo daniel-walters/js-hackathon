@@ -1,10 +1,10 @@
 
 export const card = document.getElementById("cocktail-card");
 
-
-export const generateCard = (data) => {
+//recommended = boolean true if being called from the recommended button
+export const generateCard = (data, recommended) => {
     // want to retrieve name, img-url, ingredients, instructions about cocktail
-    const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl, idDrink: id} = data;
+    const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl, idDrink: id, strCategory: category} = data;
     // get list of ingredients and save as array. filters any null values
     const {strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15} = data;
     const ingredientsUnfiltered = [strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15]
@@ -17,6 +17,7 @@ export const generateCard = (data) => {
     card.innerHTML = `
     <div class="child">
         <h2>${name}</h2>
+        ${recommended ? "<p>(Recommended because you like " + category + "s)</p>": ""}
         <img src="${imgUrl}" width="200px" class="card-image" alt="${name}"/>
         <div id="spotify-widget"></div>
     </div>
@@ -36,7 +37,7 @@ export const generateCard = (data) => {
     </div>
     `
     
-    return {id: id, name: name};
+    return [{id: id, name: name}, category];
 }
 
 export const generateIngredientList = (ingredients, measures) =>{

@@ -1,8 +1,9 @@
-import { getCocktailFromSearch } from "./util-dan.js";
+import { getCocktailFromSearch, getKeyWithHighestValue } from "./util-dan.js";
 import {card, generateCard } from "./cocktail-card.js";
 
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1"
 const likedDrinks = retrieveList();
+const likedCategoriesFrequencies = retrieveFreq();
 
 //set click listener on search button and prevent page refresh
 document.getElementById("search-form").addEventListener("submit", (event) => {
@@ -23,6 +24,14 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
 //set click listener on recommend drink button
 document.getElementById("reco-button").addEventListener("click", () => {
     console.log("Recommend button pressed"); //call recommend function once integerated.
+    const favCat = getKeyWithHighestValue(likedCategoriesFrequencies);
+    if (favCat) {
+        fetch(`${COCKTAIL_BASE_API}/filter.php?c=${favCat}`)
+            .then(response => response.json())
+            .then(getCocktailFromSearch)
+            .then(cocktail => getCocktailById(cocktail.idDrink, true))
+            .catch(error => console.error(error));
+    }    
 });
 
 //=======================================
@@ -30,21 +39,26 @@ document.getElementById("reco-button").addEventListener("click", () => {
 //=======================================
 
 
-// retrieves cocktail information based on its id
-function getCocktailById(id) {
+// retrieves cocktail information based on its id. recommended = optional boolean if coming from recommended
+function getCocktailById(id, recommended) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
-    .then(data => generateCard(data.drinks[0]))
+    .then(data => generateCard(data.drinks[0], recommended))
     .catch(error => alert(error.message))
 }
 
 //adds events to things that appear after cocktail card has been filled
-//drink info = object {id, name}
+//drink info = [{id, name}, category]
 function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("add-to-list").addEventListener("click", () => {
-        likedDrinks.push(drinkInfo);
+        likedDrinks.push(drinkInfo[0]);
         localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
         console.log(likedDrinks);
+
+        //add/increment liked category frequency
+        likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
+        localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
+        console.log(likedCategoriesFrequencies);
     })
 }
 
@@ -57,11 +71,20 @@ function retrieveList() {
     return JSON.parse(listString || "[]");
 }
 
+function retrieveFreq() {
+    const freqString = localStorage.getItem("category-freq");
+    return JSON.parse(freqString || "{}");
+}
+
 // ======================
 // LIST OF LIKED DRINKS
 // ======================
 
+
 const generateLikedDrinkList = () => {
+
+document.getElementById("show-liked-drinks").addEventListener("click", () => {
+
     let myList = retrieveList();
     console.log(myList);
     if(myList.length == 0 || !myList) {
@@ -81,6 +104,8 @@ const generateLikedDrinkList = () => {
 
 }
 
+ 
+
 const displayLikedDrink = (drink) => {
     // take drink object and turn it into a HTML
     const drinkHtml = `<div>
@@ -90,6 +115,7 @@ const displayLikedDrink = (drink) => {
         </div>`
     return drinkHtml;
 }
+
 
 // click to show list of liked drinks on display
 document.getElementById("show-liked-drinks").addEventListener("click", generateLikedDrinkList)
@@ -108,3 +134,4 @@ const addEventToDrinkList = (drink, currentList) => {
         generateLikedDrinkList;
     })
 }
+

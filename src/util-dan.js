@@ -11,3 +11,9 @@ export const getCocktailFromSearch = (data) => {
     
     return drinksArray[randomIndex];
 }
+
+export const getKeyWithHighestValue = (obj) => {
+    const maxValue = Math.max(...(Object.values(obj)));
+    const correspondingKey = Object.keys(obj).find(key => obj[key] === maxValue);
+    return correspondingKey;
+}
