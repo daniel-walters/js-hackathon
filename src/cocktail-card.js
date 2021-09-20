@@ -1,8 +1,8 @@
 
 export const card = document.getElementById("cocktail-card");
 
-
-export const generateCard = (data) => {
+//recommended = boolean true if being called from the recommended button
+export const generateCard = (data, recommended) => {
     // want to retrieve name, img-url, ingredients, instructions about cocktail
     const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl, idDrink: id, strCategory: category} = data;
     // get list of ingredients and save as array. filters any null values
@@ -17,6 +17,7 @@ export const generateCard = (data) => {
     card.innerHTML = `
     <div class="child">
         <h2>${name}</h2>
+        ${recommended ? "<p>(Recommended because you like " + category + "s)</p>": ""}
         <img src="${imgUrl}" width="200px" class="card-image" alt="${name}"/>
         <div id="spotify-widget"></div>
     </div>
