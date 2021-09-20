@@ -99,15 +99,16 @@ const generateLikedDrinkList = () => {
             likedDrinksDiv.innerHTML += displayLikedDrink(drink);
             // and add event listener to remove button
             console.log(drink);
-            addEventToDrinkList(drink);
-        })
-    });
+            document.getElementById(`remove-${drink.id}`).addEventListener("click", () => addEventToDrinkList(drink.id));
+        });
+    })
 }
 
  
 
 const displayLikedDrink = (drink) => {
     // take drink object and turn it into a HTML
+
     const drinkHtml = `<div id="div-${drink.id}">
         <h3>${drink.name}</h3>
         <button id="show-drink-${drink.id}">Show more</button>
@@ -126,18 +127,15 @@ document.getElementById("show-liked-drinks").addEventListener("click", generateL
 // REMOVE DRINK FROM LOCSALSTORAGE
 // ================================
 
-function addEventToDrinkList(drink) {
-    document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
-        console.log(drink)
-        // remove drink from local storage
-        let newList = likedDrinks.filter((item) => item.id !== drink.id);
-        localStorage.setItem("drinks-list", JSON.stringify(newList));
-        // remove category count from localstorage
-        removeCategoryFrequency(drink.id);
-        // remove the drink from browser
-        let drinkDiv = document.getElementById(`div-${drink.id}`)
-        drinkDiv.remove();
-    })
+function addEventToDrinkList(id) {
+    // remove drink from local storage
+    let newList = likedDrinks.filter((item) => item.id !== id);
+    localStorage.setItem("drinks-list", JSON.stringify(newList));
+    // remove category count from localstorage
+    removeCategoryFrequency(id);
+    // remove the drink from browser
+    let drinkDiv = document.getElementById(`div-${id}`)
+    drinkDiv.remove();
 }
 
 const removeCategoryFrequency = (id) => {
@@ -153,3 +151,8 @@ const decrementCategoryAndSave = (category) => {
     likedCategoriesFrequencies[category] -= 1;
     localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
 }
+
+// ================================
+// CLICK ON SHOW MORE IN LIKED LIST
+// ================================
+
