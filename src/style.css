@@ -13,6 +13,19 @@ header {
     padding: 20px 0px;
 }
 
+h1, h2, h3, h4 {
+    font-family: 'Bebas Neue', cursive;
+}
+
+h1 {
+    font-size: 3rem;
+    text-decoration: overline underline;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
 #search-section {
     background: hsla(0, 0%, 83%, 0.2);
     text-align: center;
@@ -24,6 +37,8 @@ header {
     padding: 5px;
     border: none;
     border-radius: 5px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
 }
 
 #submit-button {
@@ -32,11 +47,12 @@ header {
 }
 
 #reco-button, #show-liked-drinks {
-    margin: 15px 10px 0 10px;;
+    margin: 15px 10px 0 10px;
 }
 
 #cocktail-card {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     margin: 20px auto;
     padding: 2rem;
@@ -50,6 +66,10 @@ header {
 }
 
 .child {
-    padding: 10px;
+    margin: 10px;
     max-width: 45%;
+}
+.child-button {
+    width: 100%;
+    text-align: center;
 }
