@@ -4,8 +4,8 @@
 }
 
 body {
-    color: #d3d3d3;
-    background: #565656;
+    color: hsl(0, 0%, 34%);
+    background: #d3d3d3;
 }
 
 header {
@@ -27,13 +27,14 @@ h2 {
 }
 
 #search-section {
-    background: hsla(0, 0%, 83%, 0.2);
+    background-image: url('./img/bar.jpg');
+    background-size: cover;
     text-align: center;
     margin: none;
     padding: 15px 0;
 }
 
-#search-bar, #submit-button, #reco-button, #show-liked-drinks {
+#search-bar, #submit-button, #reco-button, #show-liked-drinks, #add-to-list {
     padding: 5px;
     border: none;
     border-radius: 5px;
@@ -50,6 +51,7 @@ h2 {
     margin: 15px 10px 0 10px;
 }
 
+/* COCLTAIL CARD */
 #cocktail-card {
     display: flex;
     justify-content: center;
@@ -62,7 +64,6 @@ h2 {
 
 .show-card {
     background: white;
-    border: black 2px solid;
 }
 
 .child {
@@ -77,3 +78,43 @@ h2 {
 .card-image {
     border-radius: 50%;
 }
+
+#add-to-list {
+    background: rgb(81, 131, 231);
+}
+
+/* LIST OF DRINKS USER LIKED */
+
+.subtitle {
+    font-size: 1.8rem;
+    text-decoration: underline;
+}
+#liked-drinks {
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+.div-list-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.delete-button , .show-details-button {
+    border: none;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+}
+
+.delete-button {
+    background: red;
+}
+
+.list-item-name {
+    font-size: 1.5rem;
+}
+
+

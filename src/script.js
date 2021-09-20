@@ -93,7 +93,7 @@ const generateLikedDrinkList = () => {
         // create divs with cocktail name and button to remove from list
         let likedDrinksDiv = document.getElementById("liked-drinks")
         // empty list on display first
-        likedDrinksDiv.innerHTML = "";
+        likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
         myList.forEach((drink) => {
             // add html to display drink
             likedDrinksDiv.innerHTML += displayLikedDrink(drink);
@@ -109,10 +109,12 @@ const generateLikedDrinkList = () => {
 const displayLikedDrink = (drink) => {
     // take drink object and turn it into a HTML
 
-    const drinkHtml = `<div id="div-${drink.id}">
-        <h3>${drink.name}</h3>
-        <button id="show-drink-${drink.id}">Show more</button>
-        <button id="remove-${drink.id}">Remove from List</button>
+    const drinkHtml = `<div id="div-${drink.id}" class="div-list-item">
+        <h3 class="list-item-name">${drink.name}</h3>
+        <div class="list-buttons">
+            <button id="show-drink-${drink.id}" class="show-details-button">Details</button>
+            <button id="remove-${drink.id}" class="delete-button">Remove</button>
+        </div>
         </div>`
     return drinkHtml;
 }
