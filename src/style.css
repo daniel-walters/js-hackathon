@@ -73,3 +73,7 @@ h2 {
     width: 100%;
     text-align: center;
 }
+
+.card-image {
+    border-radius: 50%;
+}
