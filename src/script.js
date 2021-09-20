@@ -44,7 +44,7 @@ function getCocktailById(id, recommended) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(data => generateCard(data.drinks[0], recommended))
-    .catch(error => alert(error.message))
+    .catch(error => console.error(error.message))
 }
 
 //adds events to things that appear after cocktail card has been filled
@@ -99,9 +99,8 @@ const generateLikedDrinkList = () => {
             likedDrinksDiv.innerHTML += displayLikedDrink(drink);
             // and add event listener to remove button
             console.log(drink);
-            addEventToDrinkList(drink, myList);
+            addEventToDrinkList(drink);
         })
-
     });
 }
 
@@ -109,9 +108,9 @@ const generateLikedDrinkList = () => {
 
 const displayLikedDrink = (drink) => {
     // take drink object and turn it into a HTML
-    const drinkHtml = `<div>
+    const drinkHtml = `<div id="div-${drink.id}">
         <h3>${drink.name}</h3>
-        <button id="show-drink${drink.id}">Show more</button>
+        <button id="show-drink-${drink.id}">Show more</button>
         <button id="remove-${drink.id}">Remove from List</button>
         </div>`
     return drinkHtml;
@@ -127,12 +126,30 @@ document.getElementById("show-liked-drinks").addEventListener("click", generateL
 // REMOVE DRINK FROM LOCSALSTORAGE
 // ================================
 
-const addEventToDrinkList = (drink, currentList) => {
+function addEventToDrinkList(drink) {
     document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
         console.log(drink)
-        let newList = currentList.filter((item) => item.id !== drink.id);
+        // remove drink from local storage
+        let newList = likedDrinks.filter((item) => item.id !== drink.id);
         localStorage.setItem("drinks-list", JSON.stringify(newList));
-        generateLikedDrinkList;
+        // remove category count from localstorage
+        removeCategoryFrequency(drink.id);
+        // remove the drink from browser
+        let drinkDiv = document.getElementById(`div-${drink.id}`)
+        drinkDiv.remove();
     })
 }
 
+const removeCategoryFrequency = (id) => {
+    fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
+        .then(response => response.json())
+        .then(data => data.drinks[0].strCategory)
+        .then(decrementCategoryAndSave)
+        .catch(error => console.error(error.message))
+}
+
+const decrementCategoryAndSave = (category) => {
+    console.log(category);
+    likedCategoriesFrequencies[category] -= 1;
+    localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
+}
