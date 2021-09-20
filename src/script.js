@@ -81,17 +81,23 @@ function retrieveFreq() {
 // ======================
 
 
-const generateLikedDrinkList = () => {
-
-    document.getElementById("show-liked-drinks").addEventListener("click", () => {
-
-        let myList = retrieveList();
+const showOrHideLikedDrinkList = () => {
+    let myList = retrieveList();
+    let showFavesButton = document.getElementById("show-liked-drinks");
+    let likedDrinksDiv = document.getElementById("liked-drinks")
+    if (showFavesButton.classList.contains("visible")) {
+        // if favourites list is already being displayed remove it 
+        likedDrinksDiv.innerHTML = "";
+        showFavesButton.textContent = "Hide Favourites";
+    } else {
+        // 
+        showFavesButton.textContent = "Show me my Favourites!";
         console.log(myList);
         if(myList.length == 0 || !myList) {
-            return console.log("currently no item in list");
+            console.log("currently no item in list");
+            likedDrinksDiv.innerHTML = `<p>You currently have no favourites</p>`;
+            return
         }
-        // create divs with cocktail name and button to remove from list
-        let likedDrinksDiv = document.getElementById("liked-drinks")
         // empty list on display first
         likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
         myList.forEach((drink) => {
@@ -101,7 +107,8 @@ const generateLikedDrinkList = () => {
             console.log(drink);
             addEventToDrinkList(drink);
         })
-    });
+    }
+    showFavesButton.classList.toggle("visible");
 }
 
  
@@ -121,7 +128,7 @@ const displayLikedDrink = (drink) => {
 
 
 // click to show list of liked drinks on display
-document.getElementById("show-liked-drinks").addEventListener("click", generateLikedDrinkList)
+document.getElementById("show-liked-drinks").addEventListener("click", showOrHideLikedDrinkList)
 
 
 
