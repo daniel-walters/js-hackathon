@@ -1,3 +1,5 @@
+import { getCocktailFromSearch } from "./util-dan.js";
+
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1"
 
 //set click listener on search button and prevent page refresh
@@ -8,7 +10,8 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
     if (searchBar.value) {
         fetch(`${COCKTAIL_BASE_API}/search.php?s=${searchBar.value.toLowerCase()}`)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(getCocktailFromSearch)
+            .then(cocktail => console.log(cocktail))
             .catch(error => console.error(error))
             .finally(() => searchBar.value = "");
     }

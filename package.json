@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/daniel-walters/js-hackathon/issues"
   },
-  "homepage": "https://github.com/daniel-walters/js-hackathon#readme"
+  "homepage": "https://github.com/daniel-walters/js-hackathon#readme",
+  "type": "module"
 }
