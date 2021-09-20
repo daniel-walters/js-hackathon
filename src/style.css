@@ -1,0 +1,120 @@
+* {
+    font-family: 'Bitter', serif;
+    margin: 0;
+}
+
+body {
+    color: hsl(0, 0%, 34%);
+    background: #d3d3d3;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0px;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Bebas Neue', cursive;
+}
+
+h1 {
+    font-size: 3rem;
+    text-decoration: overline underline;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+#search-section {
+    background-image: url('./img/bar.jpg');
+    background-size: cover;
+    text-align: center;
+    margin: none;
+    padding: 15px 0;
+}
+
+#search-bar, #submit-button, #reco-button, #show-liked-drinks, #add-to-list {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+}
+
+#submit-button {
+    background: white;
+    color: #565656;
+}
+
+#reco-button, #show-liked-drinks {
+    margin: 15px 10px 0 10px;
+}
+
+/* COCLTAIL CARD */
+#cocktail-card {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    padding: 2rem;
+    max-width: 80vw;
+    
+}
+
+.show-card {
+    background: white;
+}
+
+.child {
+    margin: 10px;
+    max-width: 45%;
+}
+.child-button {
+    width: 100%;
+    text-align: center;
+}
+
+.card-image {
+    border-radius: 50%;
+}
+
+#add-to-list {
+    background: rgb(81, 131, 231);
+}
+
+/* LIST OF DRINKS USER LIKED */
+
+.subtitle {
+    font-size: 1.8rem;
+    text-decoration: underline;
+}
+#liked-drinks {
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+.div-list-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.delete-button , .show-details-button {
+    border: none;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+}
+
+.delete-button {
+    background: red;
+}
+
+.list-item-name {
+    font-size: 1.5rem;
+}
+
+

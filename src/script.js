@@ -81,19 +81,25 @@ function retrieveFreq() {
 // ======================
 
 
-const generateLikedDrinkList = () => {
-
-    document.getElementById("show-liked-drinks").addEventListener("click", () => {
-
-        let myList = retrieveList();
+const showOrHideLikedDrinkList = () => {
+    let myList = retrieveList();
+    let showFavesButton = document.getElementById("show-liked-drinks");
+    let likedDrinksDiv = document.getElementById("liked-drinks")
+    if (showFavesButton.classList.contains("visible")) {
+        // if favourites list is already being displayed remove it 
+        likedDrinksDiv.innerHTML = "";
+        showFavesButton.textContent = "Hide Favourites";
+    } else {
+        // 
+        showFavesButton.textContent = "Show me my Favourites!";
         console.log(myList);
         if(myList.length == 0 || !myList) {
-            return console.log("currently no item in list");
+            console.log("currently no item in list");
+            likedDrinksDiv.innerHTML = `<p>You currently have no favourites</p>`;
+            return
         }
-        // create divs with cocktail name and button to remove from list
-        let likedDrinksDiv = document.getElementById("liked-drinks")
         // empty list on display first
-        likedDrinksDiv.innerHTML = "";
+        likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
         myList.forEach((drink) => {
             // add html to display drink
             likedDrinksDiv.innerHTML += displayLikedDrink(drink);
@@ -101,7 +107,8 @@ const generateLikedDrinkList = () => {
             console.log(drink);
             addEventToDrinkList(drink);
         })
-    });
+    }
+    showFavesButton.classList.toggle("visible");
 }
 
  
@@ -109,17 +116,19 @@ const generateLikedDrinkList = () => {
 const displayLikedDrink = (drink) => {
     // take drink object and turn it into a HTML
 
-    const drinkHtml = `<div id="div-${drink.id}">
-        <h3>${drink.name}</h3>
-        <button id="show-drink-${drink.id}">Show more</button>
-        <button id="remove-${drink.id}">Remove from List</button>
+    const drinkHtml = `<div id="div-${drink.id}" class="div-list-item">
+        <h3 class="list-item-name">${drink.name}</h3>
+        <div class="list-buttons">
+            <button id="show-drink-${drink.id}" class="show-details-button">Details</button>
+            <button id="remove-${drink.id}" class="delete-button">Remove</button>
+        </div>
         </div>`
     return drinkHtml;
 }
 
 
 // click to show list of liked drinks on display
-document.getElementById("show-liked-drinks").addEventListener("click", generateLikedDrinkList)
+document.getElementById("show-liked-drinks").addEventListener("click", showOrHideLikedDrinkList)
 
 
 

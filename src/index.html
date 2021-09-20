@@ -4,17 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bitter:wght@400;700&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <form id="search-form">
-        <input id="search-bar" type="text" name="search-bar" placeholder="Search for a Drink...">
-        <input type="submit" id="submit-button">
-    </form>
-    <button id="reco-button">Recommend me a Drink!</button>
-    <!-- button for list of liked drinks -->
-    <button id="show-liked-drinks">Show me the Drinks I liked!</button>
-    <div id="liked-drinks"></div>
+    <header>
+        <h1>COCKTAILS & MUSIC</h1>
+    </header>
+    <section id="search-section">
+        <form id="search-form">
+            <input id="search-bar" type="text" name="search-bar" placeholder="Search for a Drink...">
+            <input type="submit" id="submit-button">
+        </form>
+        <button id="reco-button">Recommend me a Drink!</button>
+        <!-- button for list of liked drinks -->
+        <button id="show-liked-drinks">Show me my favourites!</button>
+    </section>
+    <div id="liked-drinks">
+    </div>
     <!-- div for cocktail-card -->
     <div id="cocktail-card"></div>
    
