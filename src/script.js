@@ -1,4 +1,3 @@
-import {card, cocktailApiBase, getCocktail, generateCard, generateIngredientList } from "./cocktail-card.js";
 
 //set click listener on search button and prevent page refresh
 document.getElementById("search-form").addEventListener("click", (event) => {
