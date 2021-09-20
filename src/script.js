@@ -3,6 +3,7 @@ import {card, generateCard } from "./cocktail-card.js";
 
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1"
 const likedDrinks = retrieveList();
+const likedCategoriesFrequencies = retrieveFreq();
 
 //set click listener on search button and prevent page refresh
 document.getElementById("search-form").addEventListener("submit", (event) => {
@@ -39,12 +40,17 @@ function getCocktailById(id) {
 }
 
 //adds events to things that appear after cocktail card has been filled
-//drink info = object {id, name}
+//drink info = [{id, name}, category]
 function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("add-to-list").addEventListener("click", () => {
-        likedDrinks.push(drinkInfo);
+        likedDrinks.push(drinkInfo[0]);
         localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
         console.log(likedDrinks);
+
+        //add/increment liked category frequency
+        likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
+        localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
+        console.log(likedCategoriesFrequencies);
     })
 }
 
@@ -55,4 +61,9 @@ function addEventsToCocktailCard(drinkInfo) {
 function retrieveList() {
     const listString = localStorage.getItem("drinks-list");
     return JSON.parse(listString || "[]");
+}
+
+function retrieveFreq() {
+    const freqString = localStorage.getItem("category-freq");
+    return JSON.parse(freqString || "{}");
 }
