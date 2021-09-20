@@ -29,11 +29,11 @@ document.getElementById("reco-button").addEventListener("click", () => {
 //=======================================
 
 const card = document.getElementById("cocktail-card");
-const cocktailApiBase = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?"
+
 
 // retrieves cocktail information based on its id
 function getCocktail(id) {
-    fetch(`${cocktailApiBase}i=${id}`)
+    fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(generateCard)
     .catch(error => alert(error.message))
@@ -66,6 +66,11 @@ function generateCard(data) {
         <ul>
         ${generateIngredientList(ingredients, measures)}
         </ul>
+        <h3>How to Make it</h3>
+        <ul>
+        ${generateRecipe(instructions)}
+        </ul>
+
     </div>
     <div class="child">
         <button type="button" id="add-to-list"> Add this to my List</button>
@@ -79,6 +84,15 @@ function generateIngredientList(ingredients, measures) {
         list += `<li>${ingredient}: ${measures[index]}</li>`
     })
     return list;
+}
+
+const generateRecipe = (instructions) => {
+    let steps = instructions.split(". ");
+    let stepsHTML = "";
+    steps.forEach((step) => {
+        stepsHTML += `<li>${step}</li>`
+    })
+    return stepsHTML;
 }
 
 
