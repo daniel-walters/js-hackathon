@@ -4,7 +4,7 @@ export const card = document.getElementById("cocktail-card");
 
 export const generateCard = (data) => {
     // want to retrieve name, img-url, ingredients, instructions about cocktail
-    const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl} = data;
+    const {strDrink: name, strInstructions: instructions, strDrinkThumb: imgUrl, idDrink: id} = data;
     // get list of ingredients and save as array. filters any null values
     const {strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15} = data;
     const ingredientsUnfiltered = [strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, trIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15]
@@ -35,6 +35,8 @@ export const generateCard = (data) => {
         <button type="button" id="add-to-list"> Add this to my List</button>
     </div>
     `
+    
+    return {id: id, name: name};
 }
 
 export const generateIngredientList = (ingredients, measures) =>{
