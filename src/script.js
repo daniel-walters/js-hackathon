@@ -83,25 +83,26 @@ function retrieveFreq() {
 
 const generateLikedDrinkList = () => {
 
-document.getElementById("show-liked-drinks").addEventListener("click", () => {
+    document.getElementById("show-liked-drinks").addEventListener("click", () => {
 
-    let myList = retrieveList();
-    console.log(myList);
-    if(myList.length == 0 || !myList) {
-        return console.log("currently no item in list");
-    }
-    // create divs with cocktail name and button to remove from list
-    let likedDrinksDiv = document.getElementById("liked-drinks")
-    // empty list on display first
-    likedDrinksDiv.innerHTML = "";
-    myList.forEach((drink) => {
-        // add html to display drink
-        likedDrinksDiv.innerHTML += displayLikedDrink(drink);
-        // and add event listener to remove button
-        console.log(drink);
-        addEventToDrinkList(drink, myList);
-    })
+        let myList = retrieveList();
+        console.log(myList);
+        if(myList.length == 0 || !myList) {
+            return console.log("currently no item in list");
+        }
+        // create divs with cocktail name and button to remove from list
+        let likedDrinksDiv = document.getElementById("liked-drinks")
+        // empty list on display first
+        likedDrinksDiv.innerHTML = "";
+        myList.forEach((drink) => {
+            // add html to display drink
+            likedDrinksDiv.innerHTML += displayLikedDrink(drink);
+            // and add event listener to remove button
+            console.log(drink);
+            addEventToDrinkList(drink, myList);
+        })
 
+    });
 }
 
  
