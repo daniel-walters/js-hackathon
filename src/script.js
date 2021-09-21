@@ -88,11 +88,19 @@ function addEventsToCocktailCard(drinkInfo) {
 //takes song object from last.fm api response
 function addSongInfo(song) {
     console.log(song);
-    const songLink = document.getElementById("song-link");
-    document.getElementById("song-name").textContent = `${song.name} by ${song.artist}`;
-    songLink.textContent = "Check it out on Last.FM";
-    songLink.href = song.url;
-    document.getElementById("get-song-button").style.visibility = "hidden";
+    if (song) {
+        const songLink = document.getElementById("song-link");
+        document.getElementById("song-name").textContent = `${song.name} by ${song.artist.name ?? song.artist}`;
+        songLink.textContent = "Check it out on Last.FM";
+        songLink.href = song.url;
+        document.getElementById("get-song-button").style.visibility = "hidden";
+    } else {
+        fetch(`${LAST_FM_BASE_API}/?method=chart.gettoptracks&api_key=${LAST_FM_KEY}&format=json`)
+            .then(response => response.json())
+            .then(data => data.tracks.track[getRandomNumber(0, data.tracks.track.length - 1)])
+            .then(addSongInfo)
+            .catch(error => console.error(error.message));
+    }
 }
 
 //=======
