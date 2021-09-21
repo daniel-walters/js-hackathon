@@ -46,7 +46,14 @@ document.getElementById("reco-button").addEventListener("click", () => {
             .then(cocktail => getCocktailById(cocktail.idDrink, true))
             .catch(error => console.error(error))
             .finally(() => hideLikedDrinks());
-    }    
+    } else {
+        fetch(`${COCKTAIL_BASE_API}/random.php`)
+            .then(response => response.json())
+            .then(getCocktailFromSearch)
+            .then(cocktail => getCocktailById(cocktail.idDrink))
+            .catch(error => console.error(error))
+            .finally(() => hideLikedDrinks());
+    }   
 });
 
 //=======================================
