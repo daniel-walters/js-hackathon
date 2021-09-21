@@ -127,13 +127,13 @@ const showOrHideLikedDrinkList = (event) => {
     let myList = retrieveList();
     let showFavesButton = document.getElementById("show-liked-drinks");
         let likedDrinksDiv = document.getElementById("liked-drinks")
-        if (showFavesButton.classList.contains("visible")) {
+        if (showFavesButton.classList.contains("hidden")) {
             // if favourites list is already being displayed remove it 
             likedDrinksDiv.innerHTML = "";
-            showFavesButton.textContent = "Hide Favourites";
+            showFavesButton.textContent = "Show me my Favourites!";
         } else {
             // 
-            showFavesButton.textContent = "Show me my Favourites!";
+            showFavesButton.textContent = "Hide Favourites";
             console.log(myList);
             if(myList.length == 0 || !myList) {
                console.log("currently no item in list");
@@ -152,7 +152,7 @@ const showOrHideLikedDrinkList = (event) => {
                 addEventsToDrinkList(drink);
             })
         }
-        showFavesButton.classList.toggle("visible")
+        showFavesButton.classList.toggle("hidden")
 }
 
  
