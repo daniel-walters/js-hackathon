@@ -1,4 +1,4 @@
-import { getCocktailFromSearch, getKeyWithHighestValue } from "./util-dan.js";
+import { getCocktailFromSearch, getKeyWithHighestValue, getRandomNumber } from "./util-dan.js";
 import {card, generateCard } from "./cocktail-card.js";
 
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1";
