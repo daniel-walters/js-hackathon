@@ -239,7 +239,7 @@ const removeCategoryFrequency = (id) => {
 
 const decrementCategoryAndSave = (category) => {
     console.log(category);
-    if (likedCategoriesFrequencies[category] > 0) likedCategoriesFrequencies -= 1;
+    if (likedCategoriesFrequencies[category] > 0) likedCategoriesFrequencies[category] -= 1;
     localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
 }
 
