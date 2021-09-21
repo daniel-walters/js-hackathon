@@ -16,10 +16,14 @@ export const generateCard = (data, recommended) => {
     card.classList.add("show-card");
     card.innerHTML = `
     <div class="child">
-        <h2>${name}</h2>
+        <h2 id="drink-name">${name}</h2>
         ${recommended ? "<p>(Recommended because you like " + category + "s)</p>": ""}
         <img src="${imgUrl}" width="200px" class="card-image" alt="${name}"/>
-        <div id="spotify-widget"></div>
+        <div id="spotify-widget">
+            <h3 id="song-name"></h3>
+            <a href="" id="song-link" target="_blank"></a>
+            <button id="get-song-button">Pair with a Song!</button>
+        </div>
     </div>
     <div class="child">
         <h3>ingredients</h3>
