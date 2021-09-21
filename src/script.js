@@ -2,7 +2,7 @@ import { getCocktailFromSearch, getKeyWithHighestValue, getRandomNumber } from "
 import {card, generateCard } from "./cocktail-card.js";
 
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1";
-const LAST_FM_BASE_API = "http://ws.audioscrobbler.com/2.0";
+const LAST_FM_BASE_API = "https://ws.audioscrobbler.com/2.0";
 const LAST_FM_KEY = "2857e445e341a103eb9da0bac1a29ad3";
 export let likedDrinks = retrieveList();
 let likedCategoriesFrequencies = retrieveFreq();
