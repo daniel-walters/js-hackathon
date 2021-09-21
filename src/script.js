@@ -75,26 +75,27 @@ function getCocktailById(id, recommended) {
 //drink info = [{id, name}, category]
 function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("get-song-button").style.visibility = "visible";
+    let addButton = document.getElementById("add-to-list") ?? false
+    if (addButton) {
+        document.getElementById("add-to-list").addEventListener("click", () => {
+            if (!likedDrinks.some(drink => drink.name === drinkInfo[0].name)) {
+                likedDrinks.push(drinkInfo[0]);
+                localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
+                console.log(likedDrinks);
 
-    document.getElementById("add-to-list").addEventListener("click", () => {
-        if (!likedDrinks.some(drink => drink.name === drinkInfo[0].name)) {
-            likedDrinks.push(drinkInfo[0]);
-            localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
-            console.log(likedDrinks);
+                //add/increment liked category frequency
+                likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
+                localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
+                console.log(likedCategoriesFrequencies);
 
-            //add/increment liked category frequency
-            likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
-            localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
-            console.log(likedCategoriesFrequencies);
-
-            // swap button to text
-            document.getElementById("add-to-list-div").innerHTML = `<p>Added to your favourites</p>`;
-        }
-        else {
-            console.log("duplicate");
-        }
-    });
-
+                // swap button to text
+                document.getElementById("add-to-list-div").innerHTML = `<p>Added to your favourites</p>`;
+            }
+            else {
+                console.log("duplicate");
+            }
+        });
+    }
     document.getElementById("get-song-button").addEventListener("click", () => {
         console.log("getting song");
         let drinkName = document.getElementById("drink-name").textContent;
