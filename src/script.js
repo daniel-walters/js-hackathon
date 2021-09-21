@@ -126,33 +126,34 @@ const showOrHideLikedDrinkList = (event) => {
     event.preventDefault();
     let myList = retrieveList();
     let showFavesButton = document.getElementById("show-liked-drinks");
-        let likedDrinksDiv = document.getElementById("liked-drinks")
-        if (showFavesButton.classList.contains("hidden")) {
-            // if favourites list is already being displayed remove it 
-            likedDrinksDiv.innerHTML = "";
-            showFavesButton.textContent = "Show me my Favourites!";
-        } else {
-            // 
-            showFavesButton.textContent = "Hide Favourites";
-            console.log(myList);
-            if(myList.length == 0 || !myList) {
-               console.log("currently no item in list");
-               likedDrinksDiv.innerHTML = `<p>You currently have no favourites</p>`;
-               return
-            }
-            // empty list on display first
-            likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
-            myList.forEach((drink) => {
-                // add html to display drink
-                likedDrinksDiv.innerHTML += displayLikedDrink(drink);
-                // and add event listener to remove button
-                console.log(drink);
-            })
-            myList.forEach((drink) => {
-                addEventsToDrinkList(drink);
-            })
+    let likedDrinksDiv = document.getElementById("liked-drinks");
+    console.log(likedDrinksDiv.children)
+    if (likedDrinksDiv.children.length > 0) {
+        // if favourites list is already being displayed remove it 
+        likedDrinksDiv.innerHTML = "";
+        showFavesButton.textContent = "Show me my Favourites!";
+    } else {
+        // 
+        showFavesButton.textContent = "Hide Favourites";
+        console.log(myList);
+        if(myList.length == 0 || !myList) {
+            console.log("currently no item in list");
+            likedDrinksDiv.innerHTML = `<p>You currently have no favourites</p>`;
+            return
         }
-        showFavesButton.classList.toggle("hidden")
+        // empty list on display first
+        likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
+        myList.forEach((drink) => {
+            // add html to display drink
+            likedDrinksDiv.innerHTML += displayLikedDrink(drink);
+            // and add event listener to remove button
+            console.log(drink);
+        })
+        myList.forEach((drink) => {
+            addEventsToDrinkList(drink);
+        })
+    }
+   
 }
 
  
