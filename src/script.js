@@ -1,7 +1,9 @@
 import { getCocktailFromSearch, getKeyWithHighestValue } from "./util-dan.js";
 import {card, generateCard } from "./cocktail-card.js";
 
-const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1"
+const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1";
+const LAST_FM_BASE_API = "http://ws.audioscrobbler.com/2.0";
+const LAST_FM_KEY = "2857e445e341a103eb9da0bac1a29ad3";
 const likedDrinks = retrieveList();
 const likedCategoriesFrequencies = retrieveFreq();
 
@@ -44,12 +46,15 @@ function getCocktailById(id, recommended) {
     fetch(`${COCKTAIL_BASE_API}/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(data => generateCard(data.drinks[0], recommended))
-    .catch(error => console.error(error.message))
+    .then(addEventsToCocktailCard)
+    .catch(error => console.error(error.message));
 }
 
 //adds events to things that appear after cocktail card has been filled
 //drink info = [{id, name}, category]
 function addEventsToCocktailCard(drinkInfo) {
+    document.getElementById("get-song-button").style.visibility = "visible";
+
     document.getElementById("add-to-list").addEventListener("click", () => {
         likedDrinks.push(drinkInfo[0]);
         localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
@@ -59,7 +64,35 @@ function addEventsToCocktailCard(drinkInfo) {
         likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
         localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
         console.log(likedCategoriesFrequencies);
+
+        }
+        else {
+            console.log("duplicate");
+        }
+    });
+
+    document.getElementById("get-song-button").addEventListener("click", () => {
+        console.log("getting song");
+        let drinkName = document.getElementById("drink-name").textContent;
+        console.log(drinkName);
+
+        fetch(`${LAST_FM_BASE_API}/?method=track.search&track=${drinkName}&api_key=${LAST_FM_KEY}&format=json`)
+            .then(response => response.json())
+            .then(data => data.results.trackmatches.track[0])
+            .then(addSongInfo)
+            .catch(error => {
+                document.getElementById("song-name").textContent = "Sorry, we couldn't find you a song :(";
+            });
     })
+}
+//takes song object from last.fm api response
+function addSongInfo(song) {
+    console.log(song);
+    const songLink = document.getElementById("song-link");
+    document.getElementById("song-name").textContent = `${song.name} by ${song.artist}`;
+    songLink.textContent = "Check it out on Last.FM";
+    songLink.href = song.url;
+    document.getElementById("get-song-button").style.visibility = "hidden";
 }
 
 //=======
