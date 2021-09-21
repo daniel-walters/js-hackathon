@@ -28,8 +28,17 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
 
 //set click listener on recommend drink button
 document.getElementById("reco-button").addEventListener("click", () => {
-    console.log("Recommend button pressed"); //call recommend function once integerated.
-    const favCat = getKeyWithHighestValue(likedCategoriesFrequencies);
+    let tempLikedCats = Object.assign({}, likedCategoriesFrequencies);
+    let favCat = getKeyWithHighestValue(tempLikedCats);
+    //pseudo-weighted-random number generator
+    if (getRandomNumber(1, 2) === 2) {
+        delete tempLikedCats[favCat];
+        favCat = getKeyWithHighestValue(tempLikedCats);
+        if (getRandomNumber(1, 3) == 3) {
+            delete tempLikedCats[favCat];
+            favCat = getKeyWithHighestValue(tempLikedCats);
+        }
+    }
     if (favCat) {
         fetch(`${COCKTAIL_BASE_API}/filter.php?c=${favCat}`)
             .then(response => response.json())
