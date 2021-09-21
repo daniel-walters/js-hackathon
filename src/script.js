@@ -56,15 +56,15 @@ function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("get-song-button").style.visibility = "visible";
 
     document.getElementById("add-to-list").addEventListener("click", () => {
-        likedDrinks.push(drinkInfo[0]);
-        localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
-        console.log(likedDrinks);
+        if (!likedDrinks.some(drink => drink.name === drinkInfo[0].name)) {
+            likedDrinks.push(drinkInfo[0]);
+            localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
+            console.log(likedDrinks);
 
-        //add/increment liked category frequency
-        likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
-        localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
-        console.log(likedCategoriesFrequencies);
-
+            //add/increment liked category frequency
+            likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
+            localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
+            console.log(likedCategoriesFrequencies);
         }
         else {
             console.log("duplicate");
