@@ -239,6 +239,8 @@ function showDrinkdetail(id) {
 function hideLikedDrinks() {
     let likedDrinksDiv = document.getElementById("liked-drinks") ?? false;
     if (likedDrinksDiv) {
+        let showFavesButton = document.getElementById("show-liked-drinks");
+        showFavesButton.textContent = "Show me my Favourites!";
         likedDrinksDiv.innerHTML = "";
     }
 }
