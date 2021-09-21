@@ -79,6 +79,9 @@ function addEventsToCocktailCard(drinkInfo) {
             likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
             localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
             console.log(likedCategoriesFrequencies);
+
+            // swap button to text
+            document.getElementById("add-to-list-div").innerHTML = `<p>Added to your favourites</p>`;
         }
         else {
             console.log("duplicate");

@@ -35,7 +35,7 @@ export const generateCard = (data, recommended) => {
         ${generateRecipe(instructions)}
         </ul>
     </div>
-    <div class="child-button">
+    <div id="add-to-list-div" class="child-button">
         <button type="button" id="add-to-list"> Add this to my List</button>
     </div>
     `
