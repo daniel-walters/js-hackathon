@@ -1,4 +1,4 @@
-
+import { likedDrinks } from "./script.js";
 export const card = document.getElementById("cocktail-card");
 
 //recommended = boolean true if being called from the recommended button
@@ -36,11 +36,18 @@ export const generateCard = (data, recommended) => {
         </ul>
     </div>
     <div id="add-to-list-div" class="child-button">
-        <button type="button" id="add-to-list"> Add this to my List</button>
+        ${addButtonOrMessage(name)}
     </div>
     `
     
     return [{id: id, name: name}, category];
+}
+
+function addButtonOrMessage(name) {
+    if (likedDrinks.some(drink => drink.name === name)) {
+        return `<p>${name} is already in your Favourites</p>`
+    }
+    return `<button type="button" id="add-to-list"> Add this to my List</button>`
 }
 
 export const generateIngredientList = (ingredients, measures) =>{
