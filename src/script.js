@@ -1,4 +1,4 @@
-import { getCocktailFromSearch, getKeyWithHighestValue, getRandomNumber } from "./util-dan.js";
+import { getCocktailFromSearch, getKeyWithHighestValue } from "./util-dan.js";
 import {card, generateCard } from "./cocktail-card.js";
 
 const COCKTAIL_BASE_API = "https://www.thecocktaildb.com/api/json/v1/1";
@@ -25,26 +25,15 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
 
 //set click listener on recommend drink button
 document.getElementById("reco-button").addEventListener("click", () => {
-    let tempLikedCats = Object.assign({}, likedCategoriesFrequencies);
-    let favCat = getKeyWithHighestValue(tempLikedCats);
-    //pseudo-weighted-random number generator
-    if (getRandomNumber(1, 2) === 2) {
-        delete tempLikedCats[favCat];
-        favCat = getKeyWithHighestValue(tempLikedCats);
-        if (getRandomNumber(1, 3) == 3) {
-            delete tempLikedCats[favCat];
-            favCat = getKeyWithHighestValue(tempLikedCats);
-        }
-    }
-     
+    console.log("Recommend button pressed"); //call recommend function once integerated.
+    const favCat = getKeyWithHighestValue(likedCategoriesFrequencies);
     if (favCat) {
         fetch(`${COCKTAIL_BASE_API}/filter.php?c=${favCat}`)
             .then(response => response.json())
             .then(getCocktailFromSearch)
             .then(cocktail => getCocktailById(cocktail.idDrink, true))
             .catch(error => console.error(error));
-    }   
-    console.log(likedCategoriesFrequencies); 
+    }    
 });
 
 //=======================================
@@ -67,7 +56,6 @@ function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("get-song-button").style.visibility = "visible";
 
     document.getElementById("add-to-list").addEventListener("click", () => {
-        if (!likedDrinks.some(drink => drink.id === drinkInfo[0].id)) { //prevent duplicates
         likedDrinks.push(drinkInfo[0]);
         localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
         console.log(likedDrinks);
@@ -76,6 +64,7 @@ function addEventsToCocktailCard(drinkInfo) {
         likedCategoriesFrequencies[drinkInfo[1]] = (likedCategoriesFrequencies[drinkInfo[1]] ?? 0) + 1;
         localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
         console.log(likedCategoriesFrequencies);
+
         }
         else {
             console.log("duplicate");
@@ -94,7 +83,6 @@ function addEventsToCocktailCard(drinkInfo) {
             .catch(error => {
                 document.getElementById("song-name").textContent = "Sorry, we couldn't find you a song :(";
             });
-
     })
 }
 //takes song object from last.fm api response
@@ -126,34 +114,37 @@ function retrieveFreq() {
 // ======================
 
 
-const showOrHideLikedDrinkList = () => {
+const showOrHideLikedDrinkList = (event) => {
+    event.preventDefault();
     let myList = retrieveList();
     let showFavesButton = document.getElementById("show-liked-drinks");
-    let likedDrinksDiv = document.getElementById("liked-drinks")
-    if (showFavesButton.classList.contains("visible")) {
-        // if favourites list is already being displayed remove it 
-        likedDrinksDiv.innerHTML = "";
-        showFavesButton.textContent = "Hide Favourites";
-    } else {
-        // 
-        showFavesButton.textContent = "Show me my Favourites!";
-        console.log(myList);
-        if(myList.length == 0 || !myList) {
-            console.log("currently no item in list");
-            likedDrinksDiv.innerHTML = `<p>You currently have no favourites</p>`;
-            return
+        let likedDrinksDiv = document.getElementById("liked-drinks")
+        if (showFavesButton.classList.contains("visible")) {
+            // if favourites list is already being displayed remove it 
+            likedDrinksDiv.innerHTML = "";
+            showFavesButton.textContent = "Hide Favourites";
+        } else {
+            // 
+            showFavesButton.textContent = "Show me my Favourites!";
+            console.log(myList);
+            if(myList.length == 0 || !myList) {
+               console.log("currently no item in list");
+               likedDrinksDiv.innerHTML = `<p>You currently have no favourites</p>`;
+               return
+            }
+            // empty list on display first
+            likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
+            myList.forEach((drink) => {
+                // add html to display drink
+                likedDrinksDiv.innerHTML += displayLikedDrink(drink);
+                // and add event listener to remove button
+                console.log(drink);
+            })
+            myList.forEach((drink) => {
+                addEventsToDrinkList(drink);
+            })
         }
-        // empty list on display first
-        likedDrinksDiv.innerHTML = `<h2 class="subtitle">My Favourites:</h2>`;
-        myList.forEach((drink) => {
-            // add html to display drink
-            likedDrinksDiv.innerHTML += displayLikedDrink(drink);
-            // and add event listener to remove button
-            console.log(drink);
-            addEventToDrinkList(drink);
-        })
-    }
-    showFavesButton.classList.toggle("visible");
+        showFavesButton.classList.toggle("visible")
 }
 
  
@@ -181,8 +172,25 @@ document.getElementById("show-liked-drinks").addEventListener("click", showOrHid
 // REMOVE DRINK FROM LOCSALSTORAGE
 // ================================
 
-function addEventToDrinkList(drink) {
-    document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
+function addEventsToDrinkList(drink) {
+    // document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
+    //     console.log(drink)
+    //     // remove drink from local storage
+    //     let newList = likedDrinks.filter((item) => item.id !== drink.id);
+    //     localStorage.setItem("drinks-list", JSON.stringify(newList));
+    //     // remove category count from localstorage
+    //     removeCategoryFrequency(drink.id);
+    //     // remove the drink from browser
+    //     let drinkDiv = document.getElementById(`div-${drink.id}`)
+    //     drinkDiv.remove();
+    // })
+    removeDrinkButton(drink);
+    showDrinkdetail(drink.id);
+
+}
+
+function removeDrinkButton(drink) {
+    return document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
         console.log(drink)
         // remove drink from local storage
         let newList = likedDrinks.filter((item) => item.id !== drink.id);
@@ -192,6 +200,13 @@ function addEventToDrinkList(drink) {
         // remove the drink from browser
         let drinkDiv = document.getElementById(`div-${drink.id}`)
         drinkDiv.remove();
+    })
+}
+
+function showDrinkdetail(id) {
+    return document.getElementById(`show-drink-${id}`).addEventListener("click", (e) => {
+        e.preventDefault();
+        getCocktailById(id);
     })
 }
 
@@ -212,4 +227,5 @@ const decrementCategoryAndSave = (category) => {
 // ================================
 // CLICK ON SHOW MORE IN LIKED LIST
 // ================================
+
 
