@@ -19,7 +19,10 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
             .then(generateCard)
             .then(addEventsToCocktailCard)
             .catch(error => console.error(error))
-            .finally(() => searchBar.value = "");
+            .finally(() => {
+                searchBar.value = "";
+                hideLikedDrinks();
+            });
     }
 });
 
@@ -32,7 +35,8 @@ document.getElementById("reco-button").addEventListener("click", () => {
             .then(response => response.json())
             .then(getCocktailFromSearch)
             .then(cocktail => getCocktailById(cocktail.idDrink, true))
-            .catch(error => console.error(error));
+            .catch(error => console.error(error))
+            .finally(() => hideLikedDrinks());
     }    
 });
 
@@ -47,7 +51,8 @@ function getCocktailById(id, recommended) {
     .then(response => response.json())
     .then(data => generateCard(data.drinks[0], recommended))
     .then(addEventsToCocktailCard)
-    .catch(error => console.error(error.message));
+    .catch(error => console.error(error.message))
+    .finally(() => hideLikedDrinks());
 }
 
 //adds events to things that appear after cocktail card has been filled
@@ -229,4 +234,11 @@ function showDrinkdetail(id) {
     })
 }
 
+//UI CLEANUP
+function hideLikedDrinks() {
+    let likedDrinksDiv = document.getElementById("liked-drinks") ?? false;
+    if (likedDrinksDiv) {
+        likedDrinksDiv.innerHTML = "";
+    }
+}
 
