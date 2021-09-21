@@ -31,10 +31,10 @@ document.getElementById("reco-button").addEventListener("click", () => {
     let tempLikedCats = Object.assign({}, likedCategoriesFrequencies);
     let favCat = getKeyWithHighestValue(tempLikedCats);
     //pseudo-weighted-random number generator
-    if (getRandomNumber(1, 2) === 2) {
+    if (Object.keys(likedCategoriesFrequencies).length > 1 && getRandomNumber(1, 2) === 2) {
         delete tempLikedCats[favCat];
         favCat = getKeyWithHighestValue(tempLikedCats);
-        if (getRandomNumber(1, 3) == 3) {
+        if (Object.keys(likedCategoriesFrequencies).length > 2 && getRandomNumber(1, 3) == 3) {
             delete tempLikedCats[favCat];
             favCat = getKeyWithHighestValue(tempLikedCats);
         }
