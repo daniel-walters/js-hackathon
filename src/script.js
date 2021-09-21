@@ -180,23 +180,20 @@ function addEventsToDrinkList(drink) {
 function removeDrinkButton(drink) {
      document.getElementById(`remove-${drink.id}`).addEventListener("click", () => {
         console.log(drink)
-        // remove category count from localstorage
         removeCategoryFrequency(drink.id);
-        // remove the drink from browser
-        let drinkDiv = document.getElementById(`div-${drink.id}`)
-        drinkDiv.remove();
-
-        // remove drink from local storage
-        let newList = likedDrinks.filter((item) => item.id !== drink.id);
-        localStorage.setItem("drinks-list", JSON.stringify(newList));
+        removeDrinkFromBrowser(drink.id);
+        removeDrinkFromLocalStorage(drink.id);
     })
 }
 
-function showDrinkdetail(id) {
-    return document.getElementById(`show-drink-${id}`).addEventListener("click", (e) => {
-        e.preventDefault();
-        getCocktailById(id);
-    })
+function removeDrinkFromLocalStorage(id) {
+    likedDrinks = likedDrinks.filter((item) => item.id !== id);
+    localStorage.setItem("drinks-list", JSON.stringify(likedDrinks));
+}
+
+function removeDrinkFromBrowser(id) {
+    let drinkDiv = document.getElementById(`div-${id}`)
+    drinkDiv.remove();
 }
 
 const removeCategoryFrequency = (id) => {
@@ -213,6 +210,15 @@ const decrementCategoryAndSave = (category) => {
     localStorage.setItem("category-freq", JSON.stringify(likedCategoriesFrequencies));
 }
 
+// ==============================
+// SHOW FAVOURITE DRINK IN DETAIL
+// ==============================
 
+function showDrinkdetail(id) {
+    return document.getElementById(`show-drink-${id}`).addEventListener("click", (e) => {
+        e.preventDefault();
+        getCocktailById(id);
+    })
+}
 
 
