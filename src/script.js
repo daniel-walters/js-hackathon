@@ -7,6 +7,10 @@ const LAST_FM_KEY = "2857e445e341a103eb9da0bac1a29ad3";
 export let likedDrinks = retrieveList();
 let likedCategoriesFrequencies = retrieveFreq();
 
+// ==========================
+// SEARCH BY NAME USING FORM
+// ==========================
+
 //set click listener on search button and prevent page refresh
 document.getElementById("search-form").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -25,6 +29,10 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
             });
     }
 });
+
+// ========================
+// RECOMMEND DRINK TO USER
+// ========================
 
 //set click listener on recommend drink button
 document.getElementById("reco-button").addEventListener("click", () => {
@@ -56,6 +64,7 @@ document.getElementById("reco-button").addEventListener("click", () => {
     }   
 });
 
+
 //=======================================
 // SEARCH COCKTAIL BY ID
 //=======================================
@@ -71,7 +80,10 @@ function getCocktailById(id, recommended) {
     .finally(() => hideLikedDrinks());
 }
 
+// ============
 //adds events to things that appear after cocktail card has been filled
+// ============
+
 //drink info = [{id, name}, category]
 function addEventsToCocktailCard(drinkInfo) {
     document.getElementById("get-song-button").style.visibility = "visible";
@@ -110,6 +122,10 @@ function addEventsToCocktailCard(drinkInfo) {
             });
     })
 }
+
+// ========================
+// ADD SONG PAIRING TO CARD
+// ========================
 //takes song object from last.fm api response
 function addSongInfo(song) {
     console.log(song);
@@ -141,6 +157,7 @@ function retrieveFreq() {
     const freqString = localStorage.getItem("category-freq");
     return JSON.parse(freqString || "{}");
 }
+
 
 // ======================
 // LIST OF LIKED DRINKS
