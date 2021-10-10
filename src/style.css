@@ -127,4 +127,43 @@ h2 {
     font-size: 1.5rem;
 }
 
+footer {
+    width: 100vw;
+    background: white;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: hsl(0, 0%, 34%);
+    color: #d3d3d3;
+    padding: 5px 0px;
+    font-size: 1.1rem;
+    
+}
+ footer p {
+    font-family: 'Bebas Neue', cursive;
+ }
 
+.github-icon, .github-icon a{
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.6rem;
+}
+
+.github-icon :hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.github-icon p {
+    font-size: 0.7rem;
+}
+
+.github-icon :visited {
+    color: #d3d3d3;;
+}
+
+.copyright {
+    font-size: 0.8rem;
+}
